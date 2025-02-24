@@ -29,10 +29,10 @@ public class SimpleIterationSolver {
         // Вывод header-а
         StringBuilder header = new StringBuilder("№");
         for (int i = 0; i < n; i++) {
-            header.append(" |x").append(i + 1);
+            header.append(" |x").append(i + 1).append("        ");
         }
         for (int i = 0; i < n; i++) {
-            header.append(" | eps").append(i + 1);
+            header.append(" | eps").append(i + 1).append("        ");
         }
         System.out.println(header);
 
