@@ -20,7 +20,9 @@ public class SimpleIterationSolver {
     public double[] solve() {
         // Проверка на диагональное преобладание
         if (!checkDiagonalDominance()) {
-            System.out.println("Внимание: Матрица не обладает диагональным преобладанием.");
+            System.out.println("Внимание: Матрица не обладает диагональным преобладанием. Выполняется перестановка строк.");
+            // Перестановка строк для обеспечения диагонального преобладания
+            applyRowSwaps();
         }
 
         double[] prevX = new double[n];
@@ -35,7 +37,6 @@ public class SimpleIterationSolver {
             header.append(" | eps").append(i + 1).append("        ");
         }
         System.out.println(header);
-
 
         while (true) {
             System.arraycopy(x, 0, prevX, 0, n);
@@ -77,7 +78,7 @@ public class SimpleIterationSolver {
         System.out.println();
     }
 
-    // Метод вычисления навзки
+    // Метод вычисления невязки
     public double[] computeResidual() {
         double[] residual = new double[n];
         for (int i = 0; i < n; i++) {
@@ -104,5 +105,29 @@ public class SimpleIterationSolver {
             }
         }
         return true;
+    }
+
+    // Метод перестановки строк для обеспечения диагонального преобладания
+    private void applyRowSwaps() {
+        for (int i = 0; i < n; i++) {
+            // Ищем строку с максимальным элементом в i-ом столбце
+            int maxRow = i;
+            for (int j = i + 1; j < n; j++) {
+                if (Math.abs(A[j][i]) > Math.abs(A[maxRow][i])) {
+                    maxRow = j;
+                }
+            }
+
+            // Если максимальный элемент не на текущей строке, меняем строки местами
+            if (maxRow != i) {
+                double[] tempRow = A[i];
+                A[i] = A[maxRow];
+                A[maxRow] = tempRow;
+
+                double temp = b[i];
+                b[i] = b[maxRow];
+                b[maxRow] = temp;
+            }
+        }
     }
 }
