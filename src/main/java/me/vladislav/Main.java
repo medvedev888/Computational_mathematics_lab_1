@@ -16,7 +16,7 @@ public class Main {
         System.out.println("\t2 - Ввести матрицу с файла");
 
         int choice = scanner.nextInt();
-        scanner.nextLine(); // Для захвата оставшейся новой строки после выбора
+        scanner.nextLine();
         if (choice == 1) {
             System.out.println("Вводим матрицу с консоли");
             System.out.print("Введите размерность матрицы: ");
@@ -25,17 +25,16 @@ public class Main {
             b = new double[n];
 
             System.out.println("Введите строки матрицы (каждая строка через пробел):");
-            scanner.nextLine(); // Для захвата оставшейся новой строки после ввода размера матрицы
+            scanner.nextLine();
             for (int i = 0; i < n; i++) {
-                // Вводим строку матрицы
-                String row = scanner.nextLine();
-                String[] values = row.split(" "); // Разделяем строку на части по пробелу
 
-                // Заполняем строку матрицы и вектор b
+                String row = scanner.nextLine();
+                String[] values = row.split(" ");
+
                 for (int j = 0; j < n; j++) {
                     A[i][j] = Double.parseDouble(values[j]);
                 }
-                b[i] = Double.parseDouble(values[n]); // Последний элемент для вектора b
+                b[i] = Double.parseDouble(values[n]);
             }
 
             System.out.print("Введите точность: ");
@@ -46,23 +45,23 @@ public class Main {
             String filename = scanner.next();
             try {
                 Scanner fileScanner = new Scanner(new File(filename));
-                int n = fileScanner.nextInt(); // Считываем размерность
-                fileScanner.nextLine(); // Считываем оставшийся перевод строки
+                int n = fileScanner.nextInt();
+                fileScanner.nextLine();
 
                 A = new double[n][n];
                 b = new double[n];
 
                 for (int i = 0; i < n; i++) {
-                    String row = fileScanner.nextLine().trim(); // Читаем строку, убираем лишние пробелы
-                    String[] values = row.split("\\s+"); // Разделяем по пробелам или табуляции
+                    String row = fileScanner.nextLine().trim();
+                    String[] values = row.split("\\s+");
 
                     for (int j = 0; j < n; j++) {
                         A[i][j] = Double.parseDouble(values[j]);
                     }
-                    b[i] = Double.parseDouble(values[n]); // Последний элемент для вектора b
+                    b[i] = Double.parseDouble(values[n]);
                 }
 
-                epsilon = Double.parseDouble(fileScanner.nextLine().trim()); // Считываем epsilon
+                epsilon = Double.parseDouble(fileScanner.nextLine().trim());
                 fileScanner.close();
             } catch (FileNotFoundException e) {
                 System.out.println("Ошибка: файл не найден.");
