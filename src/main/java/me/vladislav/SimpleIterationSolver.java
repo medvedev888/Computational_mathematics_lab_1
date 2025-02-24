@@ -18,10 +18,24 @@ public class SimpleIterationSolver {
     }
 
     public double[] solve() {
+        // Проверка на диагональное преобладание
+        if (!checkDiagonalDominance()) {
+            System.out.println("Внимание: Матрица не обладает диагональным преобладанием.");
+        }
+
         double[] prevX = new double[n];
         int iteration = 0;
 
-        System.out.println("№  |x1         |x2         |x3      |  eps1        | eps2        | eps3       |");
+        // Вывод header-а
+        StringBuilder header = new StringBuilder("№");
+        for (int i = 0; i < n; i++) {
+            header.append(" |x").append(i + 1);
+        }
+        for (int i = 0; i < n; i++) {
+            header.append(" | eps").append(i + 1);
+        }
+        System.out.println(header);
+
 
         while (true) {
             System.arraycopy(x, 0, prevX, 0, n);
@@ -63,6 +77,7 @@ public class SimpleIterationSolver {
         System.out.println();
     }
 
+    // Метод вычисления навзки
     public double[] computeResidual() {
         double[] residual = new double[n];
         for (int i = 0; i < n; i++) {
@@ -73,5 +88,21 @@ public class SimpleIterationSolver {
             residual[i] = sum - b[i];
         }
         return residual;
+    }
+
+    // Метод проверки диагонального преобладания
+    public boolean checkDiagonalDominance() {
+        for (int i = 0; i < n; i++) {
+            double sum = 0;
+            for (int j = 0; j < n; j++) {
+                if (i != j) {
+                    sum += Math.abs(A[i][j]);
+                }
+            }
+            if (Math.abs(A[i][i]) <= sum) {
+                return false;
+            }
+        }
+        return true;
     }
 }
